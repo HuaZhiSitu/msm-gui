@@ -8,20 +8,32 @@ class MoviesController < ApplicationController
     m.image=params.fetch("the_image")
     m.director_id=params.fetch("the_director_id")
     #be careful inputting director id's that don't work, it'll return an error and say the code is wrong elsewhere
-    
     m.save
-
     redirect_to("/movies",allow_other_host:true)
   end
 
   def destroy
     the_id=params.fetch("an_id")
-
     matching_records=Movie.where({:id=>the_id})
     the_movie=matching_records.at(0)
     the_movie.destroy
 
     redirect_to("/movies",allow_other_host:true)
+  end
+
+  def update
+    the_id=params.fetch("the_id")
+    matching_records=Movie.where({:id=>the_id})
+    the_movie=matching_records.at(0)
+    the_movie.title=params.fetch("the_title")
+    the_movie.year=params.fetch("the_year")
+    the_movie.duration=params.fetch("the_duration")
+    the_movie.description=params.fetch("the_description")
+    the_movie.image=params.fetch("the_image")
+    the_movie.director_id=params.fetch("the_director_id")
+    the_movie.save
+
+    redirect_to("/movies/#{the_movie.id}")
   end
 
   def index
