@@ -12,15 +12,17 @@ class MoviesController < ApplicationController
     m.save
 
     redirect_to("/movies",allow_other_host:true)
-
-    #retriever user inputs
-    #create a record in movie table
-    #populate aech column with user input
-    #save
-
-    #redirects us back to /movies url
   end
 
+  def destroy
+    the_id=params.fetch("an_id")
+
+    matching_records=Movie.where({:id=>the_id})
+    the_movie=matching_records.at(0)
+    the_movie.destroy
+
+    redirect_to("/movies",allow_other_host:true)
+  end
 
   def index
     matching_movies = Movie.all
